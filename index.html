@@ -94,6 +94,9 @@
     <div class="nav-links">
       <a href="dashboard.html">Dashboard</a>
       <a href="blog.html">Blog</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
+      <a href="api-docs.html">API</a>
       <a href="index.html#features">Features</a>
       <a href="index.html#faq">FAQ</a>
       <a href="index.html#contact">Contact</a>
@@ -230,6 +233,9 @@
   <div class="footer-links">
     <a href="dashboard.html">Dashboard</a>
     <a href="blog.html">Blog</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="api-docs.html">API</a>
     <a href="index.html#features">Features</a>
     <a href="index.html#faq">FAQ</a>
     <a href="index.html#contact">Contact</a>
@@ -241,14 +247,16 @@
 
 <script>
 // Simple FAQ toggle
-document.querySelectorAll('.faq-question').forEach(q => {
-  q.addEventListener('click', () => {
-    const answer = q.nextElementSibling;
-    const isOpen = q.innerHTML.startsWith('&#9660;');
-    q.innerHTML = (isOpen ? '&#9654;' : '&#9660;') + q.innerHTML.slice(1);
+document.querySelectorAll('.faq-item').forEach(item => {
+  const question = item.querySelector('.faq-question');
+  const answer = item.querySelector('.faq-answer');
+  answer.style.display = 'none';
+  question.addEventListener('click', () => {
+    const isOpen = question.dataset.open === 'true';
+    question.innerHTML = (isOpen ? '&#9654;' : '&#9660;') + question.innerHTML.slice(1);
     answer.style.display = isOpen ? 'none' : 'block';
+    question.dataset.open = isOpen ? 'false' : 'true';
   });
-  q.nextElementSibling.style.display = 'none';
 });
 </script>
 
