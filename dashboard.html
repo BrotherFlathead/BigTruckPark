@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Preview - BigTruckPark AutoPost</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a14;color:#e0e0e0;margin:0;padding:0}
+  .back{display:inline-block;color:#a78bfa;text-decoration:none;font-size:14px;padding:24px}
+  .back:hover{text-decoration:underline}
+  .dashboard{max-width:1100px;margin:0 auto;padding:0 24px 60px}
+  h1{color:#fff;font-size:28px;margin-bottom:4px}
+  .sub{color:#888;font-size:14px;margin-bottom:32px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:32px}
+  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px}
+  .card .label{color:#888;font-size:13px;margin-bottom:4px}
+  .card .value{color:#fff;font-size:28px;font-weight:700}
+  .card .change{color:#4ade80;font-size:13px}
+  .section-title{color:#e0e0e0;font-size:18px;font-weight:600;margin-bottom:16px}
+  .table{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;margin-bottom:32px}
+  .table-header{display:grid;grid-template-columns:3fr 1fr 1fr 1fr;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.06);color:#888;font-size:13px;font-weight:600}
+  .table-row{display:grid;grid-template-columns:3fr 1fr 1fr 1fr;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px}
+  .table-row:last-child{border-bottom:none}
+  .table-row .title{color:#fff}
+  .table-row .stat{color:#999}
+  .status-badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px}
+  .status-published{background:rgba(74,222,128,0.1);color:#4ade80}
+  .status-scheduled{background:rgba(167,139,250,0.1);color:#a78bfa}
+  .note{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px;text-align:center;color:#888;font-size:15px;margin-top:32px}
+  .note a{color:#a78bfa;text-decoration:none}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">&larr; Back to Home</a>
+<div class="dashboard">
+  <h1>Dashboard</h1>
+  <p class="sub">Your content performance at a glance. <span style="color:#666;font-style:italic">(Interactive preview — log in for live data.)</span></p>
+  
+  <div class="grid">
+    <div class="card">
+      <div class="label">Total Posts</div>
+      <div class="value">127</div>
+      <div class="change">&uarr; 12% vs last month</div>
+    </div>
+    <div class="card">
+      <div class="label">Total Views</div>
+      <div class="value">48.2K</div>
+      <div class="change">&uarr; 23% vs last month</div>
+    </div>
+    <div class="card">
+      <div class="label">Engagement Rate</div>
+      <div class="value">4.7%</div>
+      <div class="change">&uarr; 1.2% vs last month</div>
+    </div>
+    <div class="card">
+      <div class="label">Followers Gained</div>
+      <div class="value">+342</div>
+      <div class="change">&uarr; 18% vs last month</div>
+    </div>
+  </div>
+
+  <div class="section-title">Recent Posts</div>
+  <div class="table">
+    <div class="table-header">
+      <span>Content</span>
+      <span>Views</span>
+      <span>Engagement</span>
+      <span>Status</span>
+    </div>
+    <div class="table-row">
+      <span class="title">Big Truck Park Tour - Spring 2026</span>
+      <span class="stat">3,847</span>
+      <span class="stat">5.2%</span>
+      <span><span class="status-badge status-published">Published</span></span>
+    </div>
+    <div class="table-row">
+      <span class="title">Truck Maintenance Tips #47</span>
+      <span class="stat">2,156</span>
+      <span class="stat">4.8%</span>
+      <span><span class="status-badge status-published">Published</span></span>
+    </div>
+    <div class="table-row">
+      <span class="title">Featured: 2026 Kenworth W900L</span>
+      <span class="stat">5,921</span>
+      <span class="stat">6.1%</span>
+      <span><span class="status-badge status-published">Published</span></span>
+    </div>
+    <div class="table-row">
+      <span class="title">Highway Series - I-80 Westbound</span>
+      <span class="stat">—</span>
+      <span class="stat">—</span>
+      <span><span class="status-badge status-scheduled">Scheduled</span></span>
+    </div>
+  </div>
+
+  <div class="section-title">Connected Accounts</div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:24px">&#127760;</span>
+      <div>
+        <div style="color:#fff;font-size:15px;font-weight:600">@bigtruckpark</div>
+        <div style="color:#888;font-size:13px">Connected &middot; 1,247 followers</div>
+      </div>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:24px">&#127760;</span>
+      <div>
+        <div style="color:#fff;font-size:15px;font-weight:600">@bigtruckpark</div>
+        <div style="color:#888;font-size:13px">Connected &middot; 3,892 followers</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    &#128274; <strong style="color:#ddd">This is a preview.</strong> Log in to your account to access real-time data, manage posts, and configure automation settings.<br>
+    <a href="index.html#contact">Contact us</a> to request early access.
+  </div>
+</div>
+</body>
+</html>
