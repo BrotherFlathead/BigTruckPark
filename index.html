@@ -1,41 +1,254 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BigTruckPark AutoPost</title>
+<title>BigTruckPark AutoPost - AI-Powered Social Media Automation</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, 'Helvetica Neue', sans-serif; background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%); color: #eee; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
-  .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 48px; max-width: 600px; width: 100%; text-align: center; }
-  h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; color: #fff; }
-  .subtitle { color: #aaa; font-size: 16px; margin-bottom: 32px; }
-  .desc { color: #ccc; line-height: 1.8; font-size: 15px; margin-bottom: 32px; text-align: left; }
-  .desc li { margin-bottom: 8px; list-style: none; padding-left: 20px; position: relative; }
-  .desc li::before { content: "→"; position: absolute; left: 0; color: #7c3aed; }
-  .tag { display: inline-block; background: rgba(124, 58, 237, 0.2); color: #a78bfa; padding: 4px 12px; border-radius: 20px; font-size: 13px; margin-bottom: 24px; }
-  .links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
-  .links a { color: #a78bfa; text-decoration: none; font-size: 14px; padding: 8px 16px; border: 1px solid rgba(124,58,237,0.3); border-radius: 8px; transition: all 0.2s; }
-  .links a:hover { background: rgba(124,58,237,0.1); border-color: #7c3aed; }
-  footer { margin-top: 32px; color: #666; font-size: 13px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a14; color: #e0e0e0; line-height: 1.6; }
+  
+  /* Navigation */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; backdrop-filter: blur(12px); background: rgba(10,10,20,0.85); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 0; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+  .logo { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  .logo span { color: #7c5cbf; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: #999; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  
+  /* Sections */
+  section { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+  .hero { padding: 140px 24px 80px; text-align: center; }
+  .hero h1 { font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .hero h1 span { background: linear-gradient(135deg, #7c5cbf, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 20px; color: #888; max-width: 650px; margin: 0 auto 36px; }
+  .hero-badge { display: inline-block; background: rgba(124,92,191,0.15); color: #a78bfa; padding: 6px 16px; border-radius: 20px; font-size: 13px; margin-bottom: 24px; border: 1px solid rgba(124,92,191,0.25); }
+  
+  .btn { display: inline-block; padding: 12px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+  .btn-primary { background: #7c5cbf; color: #fff; border: none; }
+  .btn-primary:hover { background: #6a4dab; transform: translateY(-1px); }
+  .btn-outline { border: 1px solid rgba(255,255,255,0.15); color: #ccc; background: transparent; }
+  .btn-outline:hover { border-color: #7c5cbf; color: #fff; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  
+  /* Section Headers */
+  .section-label { color: #7c5cbf; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+  .section-title { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .section-desc { color: #888; font-size: 16px; max-width: 600px; margin-bottom: 48px; }
+  
+  /* Features Grid */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .feature-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 32px; transition: all 0.3s; }
+  .feature-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(124,92,191,0.3); transform: translateY(-2px); }
+  .feature-icon { font-size: 28px; margin-bottom: 16px; }
+  .feature-card h3 { font-size: 18px; color: #fff; margin-bottom: 10px; }
+  .feature-card p { color: #999; font-size: 14px; }
+  
+  /* How It Works */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; counter-reset: step; }
+  .step { text-align: center; padding: 32px 20px; position: relative; }
+  .step-num { width: 48px; height: 48px; background: rgba(124,92,191,0.15); border: 1px solid rgba(124,92,191,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 18px; font-weight: 700; color: #a78bfa; }
+  .step h3 { color: #fff; font-size: 17px; margin-bottom: 8px; }
+  .step p { color: #888; font-size: 14px; }
+  
+  /* FAQ */
+  .faq-list { max-width: 700px; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); padding: 20px 0; }
+  .faq-question { font-size: 16px; font-weight: 600; color: #ddd; margin-bottom: 8px; cursor: pointer; }
+  .faq-answer { font-size: 14px; color: #888; line-height: 1.7; }
+  
+  /* Contact */
+  .contact-form { max-width: 500px; }
+  .contact-form input, .contact-form textarea { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-size: 14px; margin-bottom: 16px; outline: none; transition: border-color 0.2s; font-family: inherit; }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: #7c5cbf; }
+  .contact-form textarea { min-height: 120px; resize: vertical; }
+  .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  
+  /* Footer */
+  footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 24px 32px; text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+  .footer-links a { color: #666; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: #a78bfa; }
+  footer p { color: #555; font-size: 13px; }
+  
+  .contact-info { margin-top: 24px; }
+  .contact-info p { color: #888; font-size: 14px; margin-bottom: 4px; }
+  .contact-info a { color: #a78bfa; text-decoration: none; }
+  
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 16px; }
+    .nav-links { display: none; }
+    .contact-row { grid-template-columns: 1fr; }
+    section { padding: 48px 20px; }
+    .hero { padding: 100px 20px 48px; }
+  }
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="tag">🤖 AI-Powered</div>
-  <h1>BigTruckPark AutoPost</h1>
-  <p class="subtitle">AI-Powered Social Media Automation</p>
-  <ul class="desc">
-    <li>Automated video posting via official Content Posting API</li>
-    <li>AI-generated titles, hashtags, and descriptions</li>
-    <li>Performance analytics & content strategy optimization</li>
-    <li>Smart scheduling based on audience engagement patterns</li>
-  </ul>
-  <div class="links">
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">BigTruckPark <span>AutoPost</span></div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms-of-service.html">Terms</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">&#9889; Now in Public Beta</div>
+  <h1>Automate Your Social Media<br><span>with AI Intelligence</span></h1>
+  <p>BigTruckPark AutoPost uses AI to generate, schedule, and publish engaging video content across your social media channels. Save hours every week.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn btn-primary">Get Started</a>
+    <a href="#features" class="btn btn-outline">Learn More</a>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything You Need to Scale Content</h2>
+  <p class="section-desc">A comprehensive suite of tools for content creators and brands who want to grow their social media presence.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#127910;</div>
+      <h3>Automated Video Publishing</h3>
+      <p>Upload and publish videos directly to your connected social media accounts through official API integrations. Schedule posts in advance.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#129302;</div>
+      <h3>AI Title &amp; Hashtag Generation</h3>
+      <p>Our AI analyzes your video content and generates optimized titles, descriptions, and trending hashtags to maximize reach and engagement.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128200;</div>
+      <h3>Performance Analytics</h3>
+      <p>Track views, likes, comments, shares, and follower growth. Get actionable insights to refine your content strategy over time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128197;</div>
+      <h3>Smart Scheduling</h3>
+      <p>Leverage audience engagement patterns to schedule posts at optimal times. Our system learns when your audience is most active.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128240;</div>
+      <h3>Content Strategy Optimization</h3>
+      <p>Receive AI-powered recommendations on content themes, posting frequency, and format preferences based on historical performance data.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128274;</div>
+      <h3>Secure &amp; Compliant</h3>
+      <p>All API integrations use official, authorized endpoints. Your data is encrypted and never shared with third parties. Full audit logging included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Three Steps to Automated Content</h2>
+  <p class="section-desc">Getting started is simple. Connect your accounts, configure your preferences, and let the AI do the heavy lifting.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Connect Your Accounts</h3>
+      <p>Link your social media accounts through secure OAuth authentication. We support major platforms through their official APIs.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Configure AI Preferences</h3>
+      <p>Set your brand voice, content categories, posting schedule, and audience targeting preferences. Our AI adapts to your style.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Go Autonomous</h3>
+      <p>Upload your video content and let the system handle the rest. AI generates titles, hashtags, and schedules posts automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">Frequently Asked Questions</h2>
+  <p class="section-desc">Common questions about BigTruckPark AutoPost.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question">&#9654; What social media platforms do you support?</div>
+      <div class="faq-answer">We currently support posting through official Content Posting APIs. Support for additional platforms is being added regularly based on user demand.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">&#9654; How does the AI generate titles and hashtags?</div>
+      <div class="faq-answer">Our AI analyzes video content, metadata, and trending patterns to generate contextually relevant titles and hashtags optimized for maximum engagement. You can always review and edit before posting.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">&#9654; Is my data secure?</div>
+      <div class="faq-answer">Yes. All data is encrypted in transit and at rest. We use OAuth for authentication and never store passwords. Access tokens are securely encrypted. We do not share or sell your data.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">&#9654; Can I review content before it gets posted?</div>
+      <div class="faq-answer">Yes. You have full control over the publishing workflow. You can choose between fully automated publishing or review-approve workflow where you review AI-generated content before it goes live.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">&#9654; What kind of analytics do you provide?</div>
+      <div class="faq-answer">We track views, likes, comments, shares, follower growth, engagement rates, and optimal posting times. All data is presented in an easy-to-understand dashboard with trend analysis.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="section-desc">Have questions or want to learn more? Reach out to our team.</p>
+  <div class="contact-form">
+    <div class="contact-row">
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+    </div>
+    <input type="text" placeholder="Subject">
+    <textarea placeholder="Tell us about your project or questions..."></textarea>
+    <button class="btn btn-primary" onclick="alert('Thank you for your interest! We will get back to you soon. For now, please email us at 19923364591@163.com.')">Send Message</button>
+  </div>
+  <div class="contact-info">
+    <p>Email: <a href="mailto:19923364591@163.com">19923364591@163.com</a></p>
+    <p>Response time: Within 24 hours</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="terms-of-service.html">Terms of Service</a>
   </div>
-</div>
-<footer>&copy; 2026 BigTruckPark AutoPost. All rights reserved.</footer>
+  <p>&copy; 2026 BigTruckPark AutoPost. All rights reserved.</p>
+</footer>
+
+<script>
+// Simple FAQ toggle
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const answer = q.nextElementSibling;
+    const isOpen = q.innerHTML.startsWith('&#9660;');
+    q.innerHTML = (isOpen ? '&#9654;' : '&#9660;') + q.innerHTML.slice(1);
+    answer.style.display = isOpen ? 'none' : 'block';
+  });
+  q.nextElementSibling.style.display = 'none';
+});
+</script>
+
 </body>
 </html>
