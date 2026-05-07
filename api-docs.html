@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Documentation - BigTruckPark AutoPost</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a14; color: #e0e0e0; line-height: 1.6; }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; backdrop-filter: blur(12px); background: rgba(10,10,20,0.85); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 0; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+  .logo { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  .logo span { color: #7c5cbf; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: #999; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 120px 24px 60px; display: flex; gap: 48px; }
+  .sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 100px; align-self: start; }
+  .sidebar h3 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .sidebar a { display: block; color: #888; text-decoration: none; font-size: 14px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.2s; }
+  .sidebar a:hover { color: #a78bfa; }
+  .content { flex: 1; min-width: 0; }
+  h1 { font-size: 32px; color: #fff; margin-bottom: 8px; }
+  .page-sub { color: #888; font-size: 15px; margin-bottom: 40px; }
+  h2 { font-size: 22px; color: #fff; margin-top: 48px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  h3 { font-size: 17px; color: #ddd; margin-top: 28px; margin-bottom: 8px; }
+  p { color: #999; font-size: 14px; line-height: 1.7; margin-bottom: 12px; }
+  code { background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 13px; color: #a78bfa; }
+  pre { background: #111122; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 20px; overflow-x: auto; margin: 16px 0 24px; }
+  pre code { background: none; padding: 0; color: #e0e0e0; font-size: 13px; line-height: 1.6; }
+  .endpoint { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; margin: 16px 0 24px; }
+  .endpoint .method { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-right: 8px; }
+  .method-get { background: rgba(52,211,153,0.15); color: #34d399; }
+  .method-post { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .method-delete { background: rgba(248,113,113,0.15); color: #f87171; }
+  .endpoint .url { font-family: monospace; font-size: 14px; color: #fff; }
+  .endpoint p { margin-top: 12px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  th { text-align: left; color: #888; font-weight: 600; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #ccc; }
+  td:first-child { font-family: monospace; color: #a78bfa; }
+  footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 24px 32px; text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+  .footer-links a { color: #666; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: #a78bfa; }
+  footer p { color: #555; font-size: 13px; }
+  @media (max-width: 768px) { .page { flex-direction: column; } .sidebar { display: none; } .nav-links { display: none; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">BigTruckPark <span>AutoPost</span></a></div>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="api-docs.html">API</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="sidebar">
+    <h3>API Reference</h3>
+    <a href="#overview">Overview</a>
+    <a href="#auth">Authentication</a>
+    <a href="#posts">Posts</a>
+    <a href="#analytics">Analytics</a>
+    <a href="#accounts">Accounts</a>
+    <a href="#scheduling">Scheduling</a>
+    <a href="#errors">Error Codes</a>
+    <a href="#rate-limits">Rate Limits</a>
+  </div>
+
+  <div class="content">
+    <h1>API Reference</h1>
+    <p class="page-sub">Integrate BigTruckPark AutoPost into your own applications with our RESTful API. All endpoints return JSON and require authentication.</p>
+
+    <h2 id="overview">Overview</h2>
+    <p>The BigTruckPark API provides programmatic access to your social media automation workflows. Use it to upload posts, retrieve analytics, manage connected accounts, and configure scheduling.</p>
+    <p>Base URL: <code>https://api.bigtruckpark.com/v1</code></p>
+    <p>All requests must be made over HTTPS. Responses are returned in JSON format.</p>
+
+    <h2 id="auth">Authentication</h2>
+    <p>API requests are authenticated using Bearer tokens in the Authorization header. Include your API key as follows:</p>
+    <pre><code>Authorization: Bearer sk_live_xxxxxxxxxxxxx</code></pre>
+    <p>You can generate API keys from your account dashboard. Keep your keys secure and never share them publicly.</p>
+
+    <table>
+      <tr><th>Header</th><th>Required</th><th>Description</th></tr>
+      <tr><td>Authorization</td><td>Yes</td><td>Bearer token (API key)</td></tr>
+      <tr><td>Content-Type</td><td>Yes</td><td><code>application/json</code></td></tr>
+    </table>
+
+    <h2 id="posts">Posts</h2>
+
+    <div class="endpoint">
+      <span class="method method-post">POST</span><span class="url">/posts</span>
+      <p>Create a new post. You can specify the content, platform, and scheduling options.</p>
+    </div>
+
+    <h3>Request Body</h3>
+    <table>
+      <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      <tr><td>video_url</td><td>string</td><td>Yes</td><td>URL of the video file to post</td></tr>
+      <tr><td>platform</td><td>string</td><td>Yes</td><td>Target platform (e.g., "tiktok", "youtube")</td></tr>
+      <tr><td>account_id</td><td>string</td><td>Yes</td><td>Connected account identifier</td></tr>
+      <tr><td>title</td><td>string</td><td>No</td><td>Post title (auto-generated if omitted)</td></tr>
+      <tr><td>hashtags</td><td>array</td><td>No</td><td>List of hashtags (auto-generated if omitted)</td></tr>
+      <tr><td>schedule_at</td><td>string</td><td>No</td><td>ISO 8601 timestamp for scheduled posting</td></tr>
+    </table>
+
+    <h3>Example Request</h3>
+    <pre><code>curl -X POST https://api.bigtruckpark.com/v1/posts \
+  -H "Authorization: Bearer sk_live_xxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "video_url": "https://cdn.example.com/videos/my-video.mp4",
+    "platform": "tiktok",
+    "account_id": "acc_abc123",
+    "hashtags": ["viral", "trending", "fyp"]
+  }'</code></pre>
+
+    <h3>Example Response</h3>
+    <pre><code>{
+  "id": "post_xyz789",
+  "status": "queued",
+  "platform": "tiktok",
+  "created_at": "2026-05-07T09:00:00Z",
+  "scheduled_at": null,
+  "estimated_completion": "2026-05-07T09:05:00Z"
+}</code></pre>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/posts/{id}</span>
+      <p>Retrieve the status and details of a specific post.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/posts</span>
+      <p>List all posts with optional filtering by status, platform, or date range.</p>
+    </div>
+
+    <h2 id="analytics">Analytics</h2>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/analytics/overview</span>
+      <p>Get aggregated analytics across all connected accounts: total views, followers, engagement rate, and post count.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/analytics/posts/{id}</span>
+      <p>Get detailed performance data for a specific post: views, likes, comments, shares, and watch time.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/analytics/trends</span>
+      <p>Get trending insights about optimal posting times, hashtag performance, and content format preferences.</p>
+    </div>
+
+    <h2 id="accounts">Accounts</h2>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/accounts</span>
+      <p>List all connected social media accounts with their current status and platform details.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method method-post">POST</span><span class="url">/accounts</span>
+      <p>Connect a new social media account via OAuth. Returns a redirect URL for authorization.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method method-delete">DELETE</span><span class="url">/accounts/{id}</span>
+      <p>Disconnect and remove a connected account.</p>
+    </div>
+
+    <h2 id="scheduling">Scheduling</h2>
+
+    <div class="endpoint">
+      <span class="method method-get">GET</span><span class="url">/schedule</span>
+      <p>Get the current posting schedule and optimal time recommendations.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method method-post">POST</span><span class="url">/schedule/optimize</span>
+      <p>AI-powered optimization: analyzes audience engagement patterns and returns recommended posting times for each connected account.</p>
+    </div>
+
+    <h2 id="errors">Error Codes</h2>
+    <table>
+      <tr><th>Code</th><th>Description</th></tr>
+      <tr><td>401</td><td>Unauthorized — invalid or missing API key</td></tr>
+      <tr><td>403</td><td>Forbidden — insufficient permissions</td></tr>
+      <tr><td>404</td><td>Not found — resource does not exist</td></tr>
+      <tr><td>422</td><td>Validation error — check request body</td></tr>
+      <tr><td>429</td><td>Rate limit exceeded — slow down requests</td></tr>
+      <tr><td>500</td><td>Internal server error</td></tr>
+    </table>
+
+    <h2 id="rate-limits">Rate Limits</h2>
+    <p>API requests are rate-limited to protect the platform from abuse. Limits vary by plan:</p>
+    <table>
+      <tr><th>Plan</th><th>Requests/min</th><th>Requests/day</th></tr>
+      <tr><td>Free</td><td>30</td><td>1,000</td></tr>
+      <tr><td>Pro</td><td>120</td><td>10,000</td></tr>
+      <tr><td>Enterprise</td><td>600</td><td>Unlimited</td></tr>
+    </table>
+    <p>Rate limit headers are included in every response. If you exceed your limit, you'll receive a <code>429</code> status with a <code>Retry-After</code> header indicating when to retry.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="api-docs.html">API</a>
+    <a href="blog.html">Blog</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="privacy-policy.html">Privacy</a>
+    <a href="terms-of-service.html">Terms</a>
+  </div>
+  <p>&copy; 2026 BigTruckPark AutoPost. All rights reserved.</p>
+</footer>
+</body>
+</html>
